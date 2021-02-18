@@ -12,15 +12,6 @@ void update_imu(){
     bmp.getTemperature(&temp);
   }
 
-  // Roll moving average calculation
-  roll_ma_total = roll_ma_total - roll_ma_readings[roll_ma_readIndex];
-  roll_ma_readings[roll_ma_readIndex] = roll;
-  roll_ma_total = roll_ma_total + roll_ma_readings[roll_ma_readIndex];
-  roll_ma_readIndex +=1;
-  if (roll_ma_readIndex >= roll_ma_num_readings) {
-    roll_ma_readIndex = 0;
-  }
-  roll_ma = roll_ma_total / roll_ma_num_readings;
 }
 
 void print_imu(){

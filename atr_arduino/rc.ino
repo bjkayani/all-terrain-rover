@@ -1,3 +1,5 @@
+//need to speed this up
+
 void update_rc_input(){
   rc_vals[0] = pulseIn(rc_ch_1, HIGH, pulse_timeout);
   rc_vals[1] = pulseIn(rc_ch_2, HIGH, pulse_timeout);

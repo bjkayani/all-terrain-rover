@@ -14,9 +14,9 @@
 #define rc_ch_8 28
 
 // RC Control Constants
-#define rc_upper_limit 1910
+#define rc_upper_limit 1870
 #define rc_lower_limit 1060
-#define rc_mapped_dead_band 12
+#define rc_mapped_dead_band 15
 #define rc_mapped_lower_limit -127
 #define rc_mapped_upper_limit 127
 #define pulse_timeout 50000
@@ -33,13 +33,9 @@
 #define temp_sens_d A11
 
 // Loop Timing
-#define CONTROL_LOOP_RATE 10
+#define CONTROL_LOOP_RATE 50
 #define SENSOR_UPDATE_RATE 200
 #define DEBUG_RATE 500
 
 #define GPSSerial Serial2
-
-#define front_flip_threshold 30
-#define back_flip_threshold -30
-#define flip_correction_time 500
-#define total_flip_time 1000
+#define RoboClawSerial Serial3

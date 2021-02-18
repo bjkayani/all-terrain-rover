@@ -1,6 +1,7 @@
 // All Terrain Rover - RC Operation
 // Badar Jahangir Kayani
-// 2/8/2020
+
+// GPS not working due to timing issues
 
 #include "variables.h"
 #include "constants.h"
@@ -16,7 +17,7 @@ thermistor motor_b_therm(temp_sens_b,0);
 thermistor motor_c_therm(temp_sens_c,0);
 thermistor motor_d_therm(temp_sens_d,0);
 
-RoboClaw roboclaw(&Serial3,10000);
+RoboClaw roboclaw(&RoboClawSerial,10000);
 Adafruit_NeoPixel front_strip(led_count, led_strip_front, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel back_strip(led_count, led_strip_back, NEO_GRB + NEO_KHZ800);
 
@@ -54,7 +55,7 @@ void setup() {
   front_strip.setBrightness(255);
   back_strip.setBrightness(255);
 
-  colorWipe(back_strip.Color(0,   50,   255), 0, 2);  
+  colorWipe(back_strip.Color(0,   50,   255), 2);  
   Serial.begin(115200);
 
   GPS.begin(9600);
@@ -64,11 +65,7 @@ void setup() {
   mag.begin();
   bmp.begin();
 
-  for (int thisReading = 0; thisReading < roll_ma_num_readings; thisReading++) {
-    roll_ma_readings[thisReading] = 0;
-  }
-
-  delay(2000);
+  delay(1000);
 }
 
 void loop() {
@@ -86,14 +83,8 @@ void loop() {
   }
 
   if((current_time - last_control_loop) >= CONTROL_LOOP_RATE){
-    if(time_since_last_flip < total_flip_time){
-      flip_correction();
-    }
-    else{
-      update_rc_input();
-    }
+    update_rc_input();
     update_imu();
-    flip_detection();
     update_motor_speed();
     last_control_loop = millis();
   }
@@ -109,47 +100,10 @@ void loop() {
   if((current_time - last_debug) >= DEBUG_RATE){
     //print_motor_temps();
     //print_mapped_vals();
-    print_rc_vals();
+    //print_rc_vals();
     //print_gps();
     //print_power_stats();
     //print_imu();
     last_debug = millis();
-  }
-
-}
-
-void flip_detection(){
-  time_since_last_flip = millis() - last_flip_time;
-  
-  if((roll_ma > front_flip_threshold) && (time_since_last_flip > total_flip_time)){
-    flip_direction = 0;
-    last_flip_time = millis();
-  }
-  else if((roll_ma < back_flip_threshold) && (time_since_last_flip > total_flip_time)){
-    flip_direction = 1;
-    last_flip_time = millis();
-  }
-}
-
-void flip_correction(){
-  if(flip_direction == 0){
-    if(time_since_last_flip < flip_correction_time){
-      mapped_pwm_vals[0] = -255;
-      mapped_pwm_vals[1] = -255; 
-    }
-    else{
-      mapped_pwm_vals[0] = 0;
-      mapped_pwm_vals[1] = 0; 
-    }
-  }
-  if(flip_direction == 1){
-    if(time_since_last_flip < flip_correction_time){
-      mapped_pwm_vals[0] = 255;
-      mapped_pwm_vals[1] = 255; 
-    }
-    else{
-      mapped_pwm_vals[0] = 0;
-      mapped_pwm_vals[1] = 0; 
-    }
   }
 }

@@ -30,15 +30,4 @@ float roll = 0;
 float pitch = 0;
 float heading = 0;
 
-int flip_direction = 0;
-long last_flip_time = 0;
-long time_since_last_flip = 5000;
-
-// moving average variables for the roll
-const int roll_ma_num_readings = 5;
-float roll_ma_readings[roll_ma_num_readings];      // the readings from the analog input
-int roll_ma_readIndex = 0;
-float roll_ma_total = 0;                  // the running total
-float roll_ma = 0;                // the average
-
 bool estop = true;
