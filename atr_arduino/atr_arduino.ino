@@ -69,29 +69,29 @@ void setup() {
 }
 
 void loop() {
-  accel.getEvent(&accel_event);
-  mag.getEvent(&mag_event);
-  bmp.getEvent(&bmp_event);
+  //accel.getEvent(&accel_event);
+  //mag.getEvent(&mag_event);
+  //bmp.getEvent(&bmp_event);
   
   current_time = millis();
-  GPS.read();
+  //GPS.read();
 
-  if (GPS.newNMEAreceived()) {
-    GPS.lastNMEA(); 
-    if (!GPS.parse(GPS.lastNMEA()))
-      return; 
-  }
+  //if (GPS.newNMEAreceived()) {
+  //  GPS.lastNMEA(); 
+  //  if (!GPS.parse(GPS.lastNMEA()))
+  //    return; 
+  //}
 
   if((current_time - last_control_loop) >= CONTROL_LOOP_RATE){
     update_rc_input();
-    update_imu();
+    //update_imu();
     update_motor_speed();
     last_control_loop = millis();
   }
 
   if((current_time - last_sensor_update) >= SENSOR_UPDATE_RATE){
-    update_motor_temps();
-    update_gps();
+    //update_motor_temps();
+    //update_gps();
     voltage_update();
     current_update();
     last_sensor_update = millis();

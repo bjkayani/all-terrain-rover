@@ -33,7 +33,7 @@
 #define temp_sens_d A11
 
 // Loop Timing
-#define CONTROL_LOOP_RATE 50
+#define CONTROL_LOOP_RATE 20
 #define SENSOR_UPDATE_RATE 200
 #define DEBUG_RATE 500
 
